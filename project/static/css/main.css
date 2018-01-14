@@ -69,7 +69,9 @@ label {
 }
 
 .error {
-  background: #F0D6D6;
+  color: red;
+  font-size: .8em;
+  background: #FFFFFF;
   padding: 0.5em;
 }
 
