@@ -37,10 +37,14 @@ class AllTests(unittest.TestCase):
 
 
 	# each test should start with 'test'
-	def test_user_setup(self):
+	def test_users_can_register(self):
 		new_user = User("waverider", "waverider04@gmail.com", "waverider04")
 		db.session.add(new_user)
 		db.session.commit()
+		test = db.session.query(User).all()
+		for t in test:
+			t.name
+		assert t.name == "waverider"
 
 
 if __name__ == "__main__":
