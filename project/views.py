@@ -176,7 +176,7 @@ def complete(task_id):
 	new_id = task_id
 	db.session.query(Task).filter_by(task_id=new_id).update({"status": "0"})
 	db.session.commit()
-	flash('Task marked as complete. Nice job!')
+	flash('The task is complete. Nice.')
 	return redirect(url_for('tasks'))
 
 
