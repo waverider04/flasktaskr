@@ -160,21 +160,56 @@ class UsersTests(unittest.TestCase):
         for user in users:
             self.assertEqual(user.name, 'Johnny')
 
-    # def test_default_user_role(self):
 
-    #     db.session.add(
-    #         User(
-    #             "Johnny",
-    #             "john@doe.com",
-    #             "johnny"
-    #         )
-    #     )
+    def test_users_cannot_complete_tasks_that_are_not_created_by_them(self):
+        self.create_user('waverider', 'waverider04@gmail.com', 'waverider04')
+        self.login('waverider', 'waverider04')
+        self.app.get('tasks/', follow_redirects=True)
+        self.create_task()
+        self.logout()
+        self.create_user('employee', 'employee@pyFreelance.com', 'python101')
+        self.login('employee', 'python101')
+        self.app.get('tasks/', follow_redirects=True)
+        response = self.app.get("complete/1/", follow_redirects=True)
+        self.assertNotIn(
+            b'The task is complete. Nice.', response.data
+        )
+        self.assertIn(
+            b'You can only update tasks that belong to you.', response.data
+        )
 
-    #     db.session.commit()
 
-    #     users = db.session.query(User).all()
-    #     for user in users:
-    #         self.assertEqual(user.role, 'user')
+    def test_users_cannot_delete_tasks_that_are_not_created_by_them(self):
+        self.create_user('waverider', 'waverider04@gmail.com', 'python')
+        self.login('waverider', 'python')
+        self.app.get('tasks/', follow_redirects=True)
+        self.create_task()
+        self.logout()
+        self.create_user('employee', 'employee@pyFreelance.com', 'python')
+        self.login('employee', 'python')
+        self.app.get('tasks/', follow_redirects=True)
+        response = self.app.get("delete/1/", follow_redirects=True)
+        self.assertIn(
+            b'You can only delete tasks that belong to you.', response.data
+        )
+
+
+    def test_default_user_role(self):
+
+        db.session.add(
+            User(
+                "Johnny",
+                "john@doe.com",
+                "johnny"
+            )
+        )
+
+        db.session.commit()
+
+        users = db.session.query(User).all()
+        print(users)
+        for user in users:
+            self.assertEqual(user.role, 'user')
 
 
 if __name__ == "__main__":
