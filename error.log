@@ -1,0 +1,7 @@
+
+404 error at 22-01-2018 21:07:33: http://localhost:5000/does_not_exist/
+404 error at 22-01-2018 21:09:20: http://localhost:5000/register/"
+500 error at 22-01-2018 21:09:31: http://localhost:5000/
+404 error at 22-01-2018 21:10:36: http://localhost:5000/register/"
+404 error at 22-01-2018 21:10:43: http://localhost:5000/register/"
+404 error at 22-01-2018 21:11:45: http://localhost/this-route-does-not-exist/
