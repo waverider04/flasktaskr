@@ -58,7 +58,7 @@ class UsersTests(unittest.TestCase):
         new_user = User(
             name=name,
             email=email,
-            password=bcrypt.generate_password_hash(password)
+            password='dumbpassword' #bcrypt.generate_password_hash(password)
         )
         db.session.add(new_user)
         db.session.commit()
