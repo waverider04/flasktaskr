@@ -1,6 +1,12 @@
 from fabric.api import local, settings, abort
 from fabric.contrib.console import confirm
 
+
+#################
+#### prepare ####
+#################
+
+
 def test():
 	with settings(warn_only=True):
 		result = local("nosetests -v", capture=True)
@@ -21,3 +27,28 @@ def prepare():
 	test()
 	commit()
 	push()
+
+
+################
+#### deploy ####
+################
+
+
+def pull():
+	local("git pull origin master")
+
+
+def heroku():
+	local("git push heroku master")
+
+
+def heroku_test():
+	local("heroku run nosetests -v")
+
+
+def deploy():
+	pull()
+	test()
+	commit()
+	heroku()
+	heroku_test()
